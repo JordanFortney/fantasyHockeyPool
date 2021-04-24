@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+key.txt
+currentSeasonPull.py
+scoreboardPull.py
+fixTest.py
+fixTest2.py
