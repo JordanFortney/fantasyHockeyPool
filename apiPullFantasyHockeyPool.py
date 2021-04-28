@@ -9,9 +9,9 @@ import time
 from datetime import date
 
 todayDate = date.today().strftime('%Y%m%d')
-concateURL = str("https://api.mysportsfeeds.com/v2.1/pull/nhl/current/date/20210423/player_gamelogs.json")
-with open('C:/Users/fortn/Documents/DataScience/Projects/fantasyHockeyPool/fantasyHockeyPool/key.txt','r') as key:
-    key = str(key.readlines())
+concateURL = str("https://api.mysportsfeeds.com/v2.1/pull/nhl/current/date/"+todayDate+"/player_gamelogs.json")
+keyLoc = open('C:/Users/fortn/Documents/DataScience/Projects/fantasyHockeyPool/fantasyHockeyPool/key.txt','r')
+key = str(keyLoc.readline())
 
 def todayRequest():
     try:
@@ -22,7 +22,7 @@ def todayRequest():
                 'team':{'29,30,11,15,3,19,23,20,22,27,16,24,4,28,25,14,7,18,8,20,9,13,6,10,26,17,1,12,21,142,2,5'}
             },
             headers={
-                "Authorization": "Basic " + base64.b64encode('{}:{}'.format('122c9fa9-85ab-4c70-9f79-50e41d',"MYSPORTSFEEDS").encode('utf-8')).decode('ascii')
+                "Authorization": "Basic " + base64.b64encode('{}:{}'.format(key,"MYSPORTSFEEDS").encode('utf-8')).decode('ascii')
             }
         )
     except requests.exceptions.RequestException:
@@ -40,7 +40,7 @@ def pastRequest():
                 'team':{'29,30,11,15,3,19,23,20,22,27,16,24,4,28,25,14,7,18,8,20,9,13,6,10,26,17,1,12,21,142,2,5'}
             },
             headers={
-                "Authorization": "Basic " + base64.b64encode('{}:{}'.format('122c9fa9-85ab-4c70-9f79-50e41d',"MYSPORTSFEEDS").encode('utf-8')).decode('ascii')
+                "Authorization": "Basic " + base64.b64encode('{}:{}'.format(key,"MYSPORTSFEEDS").encode('utf-8')).decode('ascii')
             }
         )
     except requests.exceptions.RequestException:
