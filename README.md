@@ -98,6 +98,6 @@ There are somethings that have not been automated and require daily to weekly at
 
 ## Contact
 If you have any questions please feel free to reach out and I'll be happy to answer them or help out if needed:
-LinkedIn: https://www.linkedin.com/in/jordanfortney/
-GitHub: https://github.com/JordanFortney
-Gmail: jordanseanearlfortney@gmail.com
+* LinkedIn: https://www.linkedin.com/in/jordanfortney/
+* GitHub: https://github.com/JordanFortney
+* Gmail: jordanseanearlfortney@gmail.com
