@@ -25,7 +25,8 @@ def pastRequest():
             # specific data to pull
             params={
                 # start date of the pool (can be a date range or an entire season if required)
-                'date':'since-20210419',
+                # the data parameter (line 29) should be deleted once the NHL playoffs officially begin
+                # 'date':'since-20210419',
                 'stats':'points',
                 # all teams are being pulled
                 'team':{'29,30,11,15,3,19,23,20,22,27,16,24,4,28,25,14,7,18,8,20,9,13,6,10,26,17,1,12,21,142,2,5'}
