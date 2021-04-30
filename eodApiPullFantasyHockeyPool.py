@@ -8,10 +8,10 @@ from pandas import json_normalize
 import schedule
 import time
 from datetime import date
+import os
 
-# store private authentication key from local .txt
-keyLoc = open('C:/Users/fortn/Documents/DataScience/Projects/fantasyHockeyPool/fantasyHockeyPool/key.txt','r')
-key = str(keyLoc.readline())
+# store private authentication key from environment files
+key = str(os.environ.get('fantasyPoolApiKey'))
 
 # once the cumulative stats ''finally'' update at ~10pm PST today's stats are no longer needed
 # in fact they are being double counted so an End Of Day update needs to be run once
@@ -75,5 +75,5 @@ sendEodStatDF['Team'].replace({'FLO':'FLA', 'WPJ':'WPG'}, inplace = True)
 
 # save the fully formatted dataframe to a .csv
 sendEodStatDF.to_csv(
-    r'C:\Users\fortn\Documents\Fantasy Hockey\2020-2021\Playoffs\playerStats.csv', 
+    'playerStats.csv', 
     index = False)

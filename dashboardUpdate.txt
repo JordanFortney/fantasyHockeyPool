@@ -1,7 +1,7 @@
 //This function will clear old data from a set range and fill it with data from a .csv saved on file
 function importCSVFromGoogleDrive() {
 
-  // get .csv from file/Google Drive
+  // get .csv from Google Drive/working directory sync
   var file = DriveApp.getFilesByName("playerStats.csv").next();
 
   // parse .csv to a readable string

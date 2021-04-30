@@ -8,14 +8,14 @@ from pandas import json_normalize
 import schedule
 import time
 from datetime import date
+import os
 
 # store today's date in a variable for the api pull url
 todayDate = date.today().strftime('%Y%m%d')
 # concat today's date into api pull url
 concateURL = str("https://api.mysportsfeeds.com/v2.1/pull/nhl/current/date/"+todayDate+"/player_gamelogs.json")
-# store private authentication key from local .txt
-keyLoc = open('C:/Users/fortn/Documents/DataScience/Projects/fantasyHockeyPool/fantasyHockeyPool/key.txt','r')
-key = str(keyLoc.readline())
+# store private authentication key from environment files
+key = str(os.environ.get('fantasyPoolApiKey'))
 
 # we want our stats to live update every ~1 minute but the cumulative stats only update once per day
 # to work around that we will load todays stats as well as the cumulative stats and add them together 
@@ -144,7 +144,7 @@ def formatStats():
 
     # save the fully formatted dataframe to a .csv
     sendStatDF.to_csv(
-        r'C:\Users\fortn\Documents\Fantasy Hockey\2020-2021\Playoffs\playerStats.csv', 
+        'playerStats.csv', 
         index = False)
 
 # call formatStats function every 60 seconds
