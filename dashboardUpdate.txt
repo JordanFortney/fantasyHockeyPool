@@ -1,0 +1,18 @@
+//This function will clear old data from a set range and fill it with data from a .csv saved on file
+function importCSVFromGoogleDrive() {
+
+  // get .csv from file/Google Drive
+  var file = DriveApp.getFilesByName("playerStats.csv").next();
+
+  // parse .csv to a readable string
+  var csvData = Utilities.parseCsv(file.getBlob().getDataAsString());
+
+  // select the correct tab in the active sheet
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Stats')
+
+  // clear old content from specific range
+  sheet.getRange("D2:J2000").clearContent()
+  
+  // fill fill range the size of our data with the new data
+  sheet.getRange(2, 4, csvData.length, csvData[0].length).setValues(csvData);
+}
