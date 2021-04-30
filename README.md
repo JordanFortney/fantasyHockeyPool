@@ -34,7 +34,7 @@ I chose to use Google Sheets as the hosting platform for the dashboard because o
 
 ## Implementation
 
-### File set up and System configuration
+### File set up and System configuration:
 1. Download this repository into the working directory of your choice
 2. Sync your Google Drive to that working directory
 3. Open the FantasyHockeyPoolDashboard.xlsx in Google Sheets and rename it
@@ -47,7 +47,7 @@ I chose to use Google Sheets as the hosting platform for the dashboard because o
     * Windows users: https://www.youtube.com/watch?v=IolxqkL7cD8
     * Mac / Linux: https://www.youtube.com/watch?v=5iWhQWVXosU
 
-### Dashboard Setup 
+### Dashboard Setup:
 1. Add the owner names for each team in the top left of each team "box" on the 'Teams' tab (ex. B4, H25)
 2. Add the owner names on the team rank table in the 'Stats' tab (ex. L3 to W3)
     * Match the names with the colours from the 'Players' tab
@@ -64,7 +64,7 @@ I chose to use Google Sheets as the hosting platform for the dashboard because o
 
 There are some things that have not been automated and require daily to weekly attention. I will outline those things in this section and give some reasoning behind them not being automated.
 
-##### Daily:
+### Daily:
 * Once games begin for the day run the apiPullFantasyHockeyPool.py in your terminal.
   * open your terminal -> navigate to your working directory -> type: python apiPullFantasyHockeyPool.py -> press enter
   * to stop the script from running use: ctrl+c
@@ -82,7 +82,7 @@ There are some things that have not been automated and require daily to weekly a
   * the day # will automatically populate and the Rank by Day graph will as well
   * Reasoning: I didn't feel like it was worth learning as much of the weird Google Script Editor language as I would need to automate this just to save 30 seconds per day.
 
-#### End of Playoff Round
+### End of each playoff round:
 * When a team is eliminated, place a marker under the 'Alive?' header of that team in the Team Data box on the 'Teams' tab (ex. F65 to F80)
   * I like to use a skull emoji ☠️
   * Reasoning: Automating this would likely be super complicated and not worth the time
@@ -94,7 +94,7 @@ There are some things that have not been automated and require daily to weekly a
   * Rank Throughout the Playoffs Graph will update
   * Reasoning: End of playoff round is not something that's intuitively available from the api that we have
 
-#### Summary
+### Summary:
 * Summary list of things you should be touching on the 'Teams' and 'Stats' tabs, everything else I would leave alone unless you are very familiar with Google Sheet formulas:
   *  Owner Names in the team boxes only, everywhere is connected to them (ex: B2, H2, R25, etc etc)
   *  Player names under the player header in the team boxes. Team, Alive?, and Points autofill
