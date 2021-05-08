@@ -26,7 +26,9 @@ def pastRequest():
             params={
                 # start date of the pool (can be a date range or an entire season if required)
                 # the data parameter (line 29) should be deleted once the NHL playoffs officially begin
-                # 'date':'since-20210419',
+                'date':'from-20210419-to-today',
+                # 'date':'20210419',
+                # 'data' : 'since-20210419',
                 'stats':'points',
                 # all teams are being pulled
                 'team':{'29,30,11,15,3,19,23,20,22,27,16,24,4,28,25,14,7,18,8,20,9,13,6,10,26,17,1,12,21,142,2,5'}
@@ -73,6 +75,8 @@ sendEodStatDF.insert(loc = 4,column = 'GamesPlayed', value = countEodStatDF['Poi
 sendEodStatDF.fillna(0, inplace = True)
 # changing the team abbreviations for florida and winnipeg
 sendEodStatDF['Team'].replace({'FLO':'FLA', 'WPJ':'WPG'}, inplace = True)
+# drop the Sam Bennet entry for calgary that hasn't been removed from the API
+sendEodStatDF = sendEodStatDF.drop(sendEodStatDF[(sendEodStatDF['Team'] == 'CGY') & (sendEodStatDF['ID'] == 5415)].index)
 
 # save the fully formatted dataframe to a .csv
 sendEodStatDF.to_csv(
