@@ -7,13 +7,14 @@ import json
 from pandas import json_normalize
 import schedule
 import time
+import datetime
 from datetime import date
 import os
 
 # store today's date in a variable for the api pull url
 todayDate = date.today().strftime('%Y%m%d')
 # concat today's date into api pull url
-concateURL = str("https://api.mysportsfeeds.com/v2.1/pull/nhl/current/date/"+todayDate+"/player_gamelogs.json")
+concateURL = str("https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-playoff/date/"+todayDate+"/player_gamelogs.json")
 # store private authentication key from environment files
 key = str(os.environ.get('fantasyPoolApiKey'))
 
@@ -30,7 +31,7 @@ def todayRequest():
             params={
                 'stats':'points',
                 # all teams are being pulled
-                'team':{'29,30,11,15,3,19,23,20,22,27,16,24,4,28,25,14,7,18,8,20,9,13,6,10,26,17,1,12,21,142,2,5'}
+                "team":{'tor,col,flo,vgk,wsh,pit,car,bos,edm,tbl,min,nsh,nyi,mtl,wpj,stl'}
             },
             # authentication using stored key variable
             headers={
@@ -45,17 +46,16 @@ def todayRequest():
 # function to pull cumulative stats updated once a day at ~10pm PST
 def pastRequest():
     try:
-        response = requests.get(
+          response = requests.get(
             # api url for cumulative game logs
-            url="https://api.mysportsfeeds.com/v2.1/pull/nhl/current/player_gamelogs.json",
+            url="https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-playoff/player_gamelogs.json",
             # specific data to pull
             params={
-                # start date of the pool (can be a date range or an entire season if required)
-                # the data parameter (line 55) should be deleted once the NHL playoffs officially begin
-                'date':'from-20210419-to-today',
                 'stats':'points',
+                'date':'until-yesterday',
+                #'date':'from-20210515-to-yesterday',
                 # all teams are being pulled
-                'team':{'29,30,11,15,3,19,23,20,22,27,16,24,4,28,25,14,7,18,8,20,9,13,6,10,26,17,1,12,21,142,2,5'}
+                "team":{'tor,col,flo,vgk,wsh,pit,car,bos,edm,tbl,min,nsh,nyi,mtl,wpj,stl'}
             },
             # authentication using stored key variable
             headers={
@@ -99,7 +99,7 @@ def formatStats():
     # since there are multiple gamelogs for a single player (from multiple games) the points must be summed tog et the total points
     sendPastStatDF = rawPastStatsDF.groupby(['Team','ID','FirstName','LastName'], as_index = False).sum()
     # temp dataframe to count the number of gamelogs belonging to each player to calculate the games played
-    countPastStatDF = rawPastStatsDF.groupby(['ID','FirstName','LastName'], as_index = False).count()
+    countPastStatDF = rawPastStatsDF.groupby(['Team','ID','FirstName','LastName'], as_index = False).count()
     # insert games played into the points dataframe
     sendPastStatDF.insert(loc = 4,column = 'PastGamesPlayed', value = countPastStatDF['PastPoints'])
 
@@ -113,11 +113,11 @@ def formatStats():
         playerTeam = todayPullData['gamelogs'][i]['team']['abbreviation']
         playerID = todayPullData['gamelogs'][i]['player']['id']
         playerFirstName = todayPullData['gamelogs'][i]['player']['firstName']
-        playerLastName = todayPullData['gamelogs'][i]['player']['lastName']
+        playerLastName = todayPullData['gamelogs'][i]['player']['lastName'] 
         playerPoints = int(todayPullData['gamelogs'][i]['stats']['scoring']['points'])
         todayList.append([playerTeam, playerID, playerFirstName, playerLastName, playerPoints])
         
-    # build dataframe from the desired today's data
+  # build dataframe from the desired today's data
     # set dataframe column names
     todayColumns = ['Team','ID', 'FirstName', 'LastName', 'TodayPoints']
     # create dataframe from set columns and appended list
@@ -125,9 +125,10 @@ def formatStats():
     # since there are multiple gamelogs for a single player (from multiple games) the points must be summed tog et the total points
     sendTodayStatDF = rawTodayStatsDF.groupby(['Team','ID','FirstName','LastName'], as_index = False).sum()
     # temp dataframe to count the number of gamelogs belonging to each player to calculate the games played
-    countTodayStatDF = rawTodayStatsDF.groupby(['ID','FirstName','LastName'], as_index = False).count()
+    countTodayStatDF = rawTodayStatsDF.groupby(['Team','ID','FirstName','LastName'], as_index = False).count()
     # insert games played into the points dataframe
     sendTodayStatDF.insert(loc = 4,column = 'TodayGamesPlayed', value = countTodayStatDF['TodayPoints'])
+
 
     # merge our cumulative and today dataframes into a final dataframe
     # outer join is used since the today dataframe does not contain players who had an off day
