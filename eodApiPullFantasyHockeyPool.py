@@ -27,8 +27,7 @@ def pastRequest():
                 # start date of the pool (can be a date range or an entire season if required)
                 # the data parameter (line 29) should be deleted once the NHL playoffs officially begin
                 #'date':'from-20210419-to-today',
-                # 'date':'20210419',
-                #"data": "since-20210419",
+                #'date':'until-20210706',
                 "stats":"points",
                 # all teams are being pulled
                 "team":{'tor,col,flo,vgk,wsh,pit,car,bos,edm,tbl,min,nsh,nyi,mtl,wpj,stl'}
@@ -82,6 +81,6 @@ def formatStats():
     # save the fully formatted dataframe to a .csv
     sendEodStatDF.to_csv(
         'playerStats.csv', 
-        index = False)
+        index = False)    
         
 formatStats()

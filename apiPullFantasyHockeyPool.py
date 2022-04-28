@@ -157,4 +157,3 @@ schedule.every(60).seconds.do(formatStats)
 while 1:
     schedule.run_pending()
     time.sleep(1)
-
