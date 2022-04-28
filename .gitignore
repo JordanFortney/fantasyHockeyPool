@@ -134,5 +134,7 @@ fixTest.py
 fixTest2.py
 fixTest3.py
 playerStats.csv
-playerStatsTest.csv
-*.tmp
+playerStatTest.json
+playerStatsAgg.csv
+playerStatsTotal.csv
+.tmp*
